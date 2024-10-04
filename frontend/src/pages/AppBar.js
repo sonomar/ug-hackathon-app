@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 import { NavLink } from "react-router-dom";
 
-export default () => {
+export const Bar = () => {
     const navigate = useNavigate();
     const auth = useAuth();
     const [anchorLogout, setAnchorLogout] = React.useState(null);
@@ -67,8 +67,8 @@ export default () => {
                             onClick={() => navigate("/receipts")}
                             sx={{ my: 2, color: 'white', display: 'block' }}>Receipts</Button>
                         <Button
-                            onClick={() => navigate("/heatmap")}
-                            sx={{ my: 2, color: 'white', display: 'block' }}>Heatmap</Button>
+                            onClick={() => navigate("/charities")}
+                            sx={{ my: 2, color: 'white', display: 'block' }}>Charities</Button>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title={auth.cred.user?.username}>
@@ -100,3 +100,5 @@ export default () => {
         </AppBar>
     );
 }
+
+export default Bar;

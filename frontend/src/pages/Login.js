@@ -36,7 +36,7 @@ export const Login = () => {
     }
 
     return (
-        <Box id="DDD" sx={{flexGrow: 1, display: "flex", padding: 2, flexDirection: "column", alignItems:"center", justifyContent:"center"}}>
+        <Box sx={{flexGrow: 1, display: "flex", padding: 2, flexDirection: "column", alignItems:"center", justifyContent:"center"}}>
         <Grid2 container  spacing={2} alignItems="center" justifyContent="center">
             <Grid2 size={{ xs: 12, sm: 8, md: 6 }} justifyContent="center" alignItems="center">
                 <img src="/img/monitoring.svg" className="centerImage"/>

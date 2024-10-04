@@ -30,6 +30,7 @@ export const Receipts = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }} margin={1}>
+            {/*
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMore />}
@@ -45,8 +46,9 @@ export const Receipts = () => {
                     </FormGroup>
                 </AccordionDetails>
             </Accordion>
+            */}
             <Grid2 container spacing={2} justifyContent="center">
-                {data?.receipts.map((r, index) => (
+                {data?.map((r, index) => (
                     <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={index}>
                         <Card
                             key={index}
