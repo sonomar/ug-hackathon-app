@@ -9,13 +9,13 @@ import CheckIcon from '@mui/icons-material/Check';
 import { Masonry } from "@mui/lab";
 import { red, blueGrey } from "@mui/material/colors";
 import { NavLink } from "react-router-dom";
+import AppBar from "./AppBar";
 
 export const Charities = () => {
     const { data, error, isFetching } = useGetAllCharitiesQuery();
 
     return (
         <Box sx={{ flexGrow: 1 }} margin={1}>
-            charities
             <Grid2 container spacing={2} justifyContent="center">
                 {data?.map((r, index) => (
                     <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={index}>

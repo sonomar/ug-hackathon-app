@@ -7,35 +7,39 @@ import { Receipts } from './pages/Receipts';
 import { BrowserRouter } from 'react-router-dom'
 import { PrivateOutlet } from "./utils/PrivateOutlet";
 import { Charities } from "./pages/Charities";
-import {Donate} from "./pages/Donate";
+import { Donate } from "./pages/Donate";
 import { Donatees } from "./pages/Donatees";
-import { Box, CssBaseline } from '@mui/material';
+import { Box, CssBaseline, Container } from '@mui/material';
+import { Home } from "./pages/Home";
+import { AppTemplate } from "./pages/AppTemplate";
 import AppBar from "./pages/AppBar";
 
-import logo from './logo.svg';
+import { themeOptions } from "./styles/theme";
 import './App.css';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
+const darkTheme = createTheme(themeOptions);
 
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Box sx={{ height: "100%" }}>
+      <Box id="" sx={{
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+      >
         <BrowserRouter>
-          <AppBar />
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/charities" element={<Charities />} />
-            <Route path="/charity/:id" element={<Donatees />} />
-            <Route path="*" element={<PrivateOutlet />}>
-              <Route index element={<Receipts />} />
-              <Route path="receipts" element={<Receipts />} />
-              <Route path="donate/:id" element={<Donate/>}/>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<AppTemplate />}>
+              <Route path="login" element={<Login />} />
+              <Route path="charities" element={<Charities />} />
+              <Route path="charity/:id" element={<Donatees />} />
+              <Route path="*" element={<PrivateOutlet />}>
+                <Route path="receipts" element={<Receipts />} />
+                <Route path="donate/:id" element={<Donate />} />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>
