@@ -2,11 +2,15 @@ import * as React from "react";
 import {
     Box, Button, Typography, Container, Link,
     Card, CardHeader, CardMedia, CardContent,
+    CardActionArea,
+    IconButton,
 } from "@mui/material";
 import AppBar from "./AppBar";
 import { color } from "../styles/theme";
 import Footer from "./Footer";
 import Carousel from "react-material-ui-carousel";
+import EmailIcon from "../icon/EmailIcon";
+import LinkedInIcon from "../icon/LinkedInIcon";
 
 const homeHeader = (
     <Box
@@ -44,7 +48,7 @@ const homeHeader = (
                 color: "white",
                 fontSize: { xs: 50, sm: 60, md: 70 },
                 textAlign: "center",
-
+                fontWeight: "normal"
             }}
         >Empower Your
             <Box
@@ -147,7 +151,7 @@ const howItWorks = (
     </Box>
 );
 
-const TeamCard = ({ image, name, position, description }) => {
+const TeamCard = ({ image, name, position, description, email, linkedin }) => {
     return (
         <Card
             sx={{ width: "267px" }}
@@ -166,6 +170,16 @@ const TeamCard = ({ image, name, position, description }) => {
                     {description}
                 </Typography>
             </CardContent>
+            <CardActionArea
+                sx={{ display: "flex", flexDirection: "row", mb: 2}}
+            >
+                <IconButton>
+                    <EmailIcon />
+                </IconButton>
+                <IconButton>
+                    <LinkedInIcon />
+                </IconButton>
+            </CardActionArea>
         </Card>
     );
 }
@@ -231,7 +245,9 @@ export const Home = () => {
                     justifyContent: "center",
                 }}
             >
-                <AppBar />
+                <AppBar
+                    variant="home"
+                />
                 {homeHeader}
             </Box >
             {howItWorks}

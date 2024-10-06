@@ -3,8 +3,8 @@ import { useGetCharityByIdQuery } from "../api/charityApi";
 import {
     Stack, Card, CardContent, CardHeader, Typography, rgbToHex, Avatar, Box, Grid2, Accordion,
     AccordionSummary, AccordionDetails, Switch, FormGroup, FormControlLabel, Chip, Button,
-    CardMedia, Link, Modal,
-    CardActions
+    CardMedia, Link, Modal, Breadcrumbs,
+    CardActions, Container, Divider
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import CheckIcon from '@mui/icons-material/Check';
@@ -18,28 +18,64 @@ export const Donatees = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }} margin={1}>
-            {charityId}
-            <Grid2 container spacing={2} justifyContent="center">
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Link
+                    sx={{ fontWeight: 600 }}
+                    component={NavLink} to="/charities">&lt; Back to Charities</Link>
+                <Box component="span" sx={{ mx: 1 }}>|</Box>
+                <Breadcrumbs separator=">">
+                    <Link component={NavLink} to="/">Home</Link>
+                    <Link component={NavLink} to="/charities">Charities</Link>
+                    <Typography>{data?.name}</Typography>
+                </Breadcrumbs>
+            </Box>
+            <Typography variant="h1" sx={{ textAlign: "left" }}>
+                {data?.name}
+            </Typography>
+            <Typography variant="body1">
+                {data?.detail}
+            </Typography>
+            <Typography variant="h2">
+                Recipients
+            </Typography>
+            <Grid2
+                container spacing={2} justifyContent="center">
                 {data?.donatees.map((r, index) => (
-                    <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 3 }} key={index}>
                         <Card
                             key={index}
-                            style={{
-                                backgroundColor: blueGrey[100 + (index % 4) * 100],
-                            }}
+                            elevation={0}
                         >
                             <CardMedia
-                                sx={{ height: 100 }}
+                                sx={{ height: 232 }}
                                 image={`/img/donatee/${r.id}.jpg`}
                             />
                             <CardHeader
-                                avatar={
-                                    <Avatar src="/img/charity/streun_logo.png" alt={r.name} />
-                                }
+                                titleTypographyProps={{ fontSize: "28px", fontWeight: 500 }}
                                 title={r.name}
                             />
-                            <CardActions>
-                                <Button href={`/donate/${r.id}`}>Donate Now</Button>
+                            <CardContent>
+                                <Divider />
+                                <Typography>
+                                    Sex: {r.sex}
+                                </Typography>
+                                <Typography>
+                                    Age: {r.age} years
+                                </Typography>
+                                <Typography>
+                                    Official injections: {r.injections ? "Yes" : "No"}
+                                </Typography>
+                                <Typography>
+                                    Neutered: {r.neutered ? "Yes" : "No"}
+                                </Typography>
+                                <Divider />
+                                <Typography sx={{ mt: 2 }}>
+                                    {r.personality}
+                                </Typography>
+                            </CardContent>
+                            <CardActions sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
+                                <Button sx={{ width: 0.8 }}
+                                    variant="outlined" href={`/donate/${r.id}`}>Donate Now</Button>
                             </CardActions>
                         </Card>
                     </Grid2>

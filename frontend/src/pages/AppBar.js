@@ -29,7 +29,7 @@ import UserIcon from "../icon/UserIcon";
 import DonationIcon from "../icon/DonationIcon";
 import {color} from "../styles/theme";
 
-export const Bar = () => {
+export const Bar = (props) => {
     const navigate = useNavigate();
     const auth = useAuth();
     const [anchorLogout, setAnchorLogout] = React.useState(null);
@@ -89,7 +89,10 @@ export const Bar = () => {
 
     return (
         <>
-            <AppBar position="static"
+            <AppBar
+                variant={props.variant}
+                elevation={0}
+                position="static"
                 sx={{
                     width: 0.9,
                     borderRadius: theme.shape.borderRadius,
@@ -111,27 +114,22 @@ export const Bar = () => {
                     }}>
                         <img
                             height="57"
-                            src="/img/Logo.svg"
+                            src={props.variant=="home"? "/img/Logo.svg" : "/img/LogoDark.svg"}
                         />
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         <Button
-                            onClick={() => navigate("/receipts")}
-                            sx={(theme) => ({
-                                backgroundColor: theme.palette.secondary.main,
-                                mr: 2,
-                                color: color.contrast,
-                            })}>Receipts</Button>
+                            component={NavLink}
+                            to="/"
+                            variant="navbar">Home</Button>
                         <Button
-                            onClick={() => navigate("/charities")}
-                            sx={{
-                                backgroundColor: "white",
-                                color: color.contrast,
-                            }}>Charities</Button>
+                            component={NavLink}
+                            to="/charities"
+                            variant="navbar">Charities</Button>
                     </Box>
                     <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
                         <Button
-                            onClick={() => navigate("/charities")}
+                            onClick={() => navigate("/receipts")}
                             sx={{ mr: 2}}
                             endIcon={<DonationIcon/>}
                             >My Donation</Button>

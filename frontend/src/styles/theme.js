@@ -30,9 +30,12 @@ const palette = {
 };
 
 const components = {
-  MuiCard:{
+  MuiCard: {
     styleOverrides: {
       root: {
+        borderWidth: 1,
+        borderColor: "#D5CDE0",
+        borderStyle: "solid",
         variants: [
           {
             props: { variant: "receipt" },
@@ -45,10 +48,30 @@ const components = {
       }
     }
   },
-  MuiAppBar:{
-    styleOverrides:{
-      root:{
-        backgroundColor: "#564A67"
+  MuiLink:{
+    styleOverrides: {
+      root: {
+        textDecoration: "none",
+        color: palette.text.primary,
+        "&:hover": {
+          textDecoration: "underline"
+        }
+      }
+    }
+  },
+  MuiAppBar: {
+    styleOverrides: {
+      root: {
+        backgroundColor: "white",
+        borderColor: "#D5CDE0",
+        variants:[
+          {
+            props: {variant: "home"},
+            style: {
+              backgroundColor: "#564A67",
+            }
+          }
+        ]
       }
     }
   },
@@ -59,6 +82,33 @@ const components = {
         paddingLeft: 20,
         paddingRight: 20,
         color: palette.primary.contrastText,
+        variants: [
+          {
+            props: { variant: "navbar" },
+            style: {
+              backgroundColor: "white",
+              color: color.contrast,
+              marginRight: 16,
+              "&.active": {
+                backgroundColor: palette.secondary.main,
+              },
+              "&.active:before": {
+                content: '"•"',
+                marginRight: 8,
+              }
+            }
+          },
+          {
+            props: {variant: "outlined"},
+            style:{
+              backgroundColor: "white",
+              color: palette.primary.main,
+              borderWidth: 1,
+              fontSize: 20,
+              fontWeight: "bold",
+            }
+          }
+        ]
       }
     }
   },
@@ -70,10 +120,18 @@ export const themeOptions = {
     fontFamily: '"Space Grotesk", "Inter", "Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',
-      fontWeight: "normal",
+      fontWeight: "bold",
+      fontSize: 52,
+      textAlign: "center",
+      marginTop: 20,
+      marginBottom: 20,
     },
     h2: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontSize: 32,
+      fontWeight: "bold",
+      marginTop: 20,
+      marginBottom: 20,
     },
     h3: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -85,6 +143,9 @@ export const themeOptions = {
     },
     h4: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontSize: 28,
+      fontWeight: "medium",
+      marginBottom: 10,
     },
     h6: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -95,6 +156,9 @@ export const themeOptions = {
       weigth: "medium",
       textTransform: "none",
     },
+    body1: {
+      fontSize: 16,
+    }
   },
   shape: {
     borderRadius: 32,

@@ -20,6 +20,10 @@ import './App.css';
 const darkTheme = createTheme(themeOptions);
 
 function App() {
+  React.useEffect(()=>{
+    document.title = "UnifyGiving"
+  },[]);
+  
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

@@ -60,7 +60,9 @@ export const handlers = [
                     id: index,
                     name: faker.company.name(),
                     city: faker.location.city(),
-                    country: faker.location.country()
+                    country: faker.location.country(),
+                    slogan: faker.lorem.words(5),
+                    detail: faker.lorem.lines(2),
                 }
             })
         )
@@ -69,10 +71,13 @@ export const handlers = [
         const { id } = params;
         const donatees = Array.apply(null, { length: 4 }).map((_, index) => {
             return {
-                id: id*10 + index,
+                id: id * 10 + index,
                 name: faker.animal.dog(),
-                "type": "dog",
-                birthday: faker.date.past({years: 10}),
+                sex: "male",
+                age: faker.number.int({min: 1, max: 20}),
+                injections: true,
+                neutered: true,
+                personality: faker.lorem.lines(2),
             }
         });
         return HttpResponse.json({
@@ -80,10 +85,12 @@ export const handlers = [
             name: faker.company.name(),
             city: faker.location.city(),
             country: faker.location.country(),
+            slogan: faker.lorem.words(5),
+            detail: faker.lorem.lines(10),
             donatees
         });
     }),
-    http.put("/api/donate", async({request}) => {
+    http.put("/api/donate", async ({ request }) => {
         const requestBody = await request.json();
 
         return HttpResponse.json({
