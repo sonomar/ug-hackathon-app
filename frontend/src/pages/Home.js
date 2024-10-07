@@ -166,12 +166,9 @@ const TeamCard = ({ image, name, position, description, email, linkedin }) => {
                 <Typography variant="subtitle1">
                     {position}
                 </Typography>
-                <Typography variant="body1">
-                    {description}
-                </Typography>
             </CardContent>
             <CardActionArea
-                sx={{ display: "flex", flexDirection: "row", mb: 2}}
+                sx={{ display: "none", flexDirection: "row", mb: 2}}
             >
                 <IconButton>
                     <EmailIcon />
@@ -186,13 +183,14 @@ const TeamCard = ({ image, name, position, description, email, linkedin }) => {
 
 const teamData = [
     { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
-    { name: "Matt", position: "Founder & CEO", description: "Favorite Dog Breed" },
+    { name: "Sharon", position: "Founder & Global Business Development", description: "Favorite Dog Breed" },
+    { name: "Rob", position: "Product Manager & Tech Lead", description: "Favorite Dog Breed" },
+    { name: "Lawson", position: "Chief Architect", description: "Favorite Dog Breed" },
+    { name: "Freeboid", position: "XR Producer & Multidisciplinary artist", description: "Favorite Dog Breed" },
+    { name: "Ankit", position: "Blockchain Specialist", description: "Favorite Dog Breed" },
+    { name: "Daniel", position: "Backend Developer", description: "Favorite Dog Breed" },
+    { name: "Andy", position: "Frontend Developer", description: "Favorite Dog Breed" },
+    { name: "Faiz", position: "Creative Direction & UI", description: "Favorite Dog Breed" },
 ];
 
 const whoWeAre = (
