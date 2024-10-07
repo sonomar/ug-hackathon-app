@@ -12,7 +12,8 @@ const { fs } = require('fs');
 const path = require('path');
 require('dotenv').config({ path: '.env'});
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+
 app.use(express.json());
 app.use(cors());
 const db = new Client({
@@ -150,4 +151,4 @@ const PUBKey = process.env.PUBLIC_KEY;
         res.status(200).json({message: 'NFT minted successfully', nftSignature});
     });
 });
-app.listen(PORT, () => console.log(`server started on http://localhost:${PORT}`));   
+app.listen(PORT, () => console.log(`server started on port: ${PORT}`));   
