@@ -28,7 +28,7 @@ export default function Footer() {
                     Contact us:
                 </Typography>
                 <Typography variant="body1" color="white">
-                    Email: <Link sx={{color:"white"}} to="mailto:contact@unifygiving.com">contact@unifygiving.com</Link>
+                    Email: <Link sx={{color:"white"}} href="mailto:contact@unifygiving.com">contact@unifygiving.com</Link>
                 </Typography>
                 <Typography variant="body1" color="white">
                     Address: London, United Kingdom
