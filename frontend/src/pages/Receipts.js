@@ -13,6 +13,7 @@ import { NavLink } from "react-router-dom";
 export const Receipts = () => {
     const { data, error, isFetching } = useGetAllReceiptsQuery();
 
+    /*
     const {data: countriesData } = useGetAllCountriesQuery();
     const [countries, setCountries] = React.useState([]);
 
@@ -30,7 +31,7 @@ export const Receipts = () => {
         c.checked = !c.checked;
         setCountries([...new Set(countries)]);
     }
-
+*/
     return (
         <Box sx={{ flexGrow: 1 }} margin={1}>
             {/*

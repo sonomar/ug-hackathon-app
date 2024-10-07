@@ -30,7 +30,7 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "set PORT=process.env.PORT && set HOST=process.env.host && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
