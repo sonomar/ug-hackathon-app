@@ -9,13 +9,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ListItemIcon, ListItemText } from "@mui/material";
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "../store/authSlice";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -27,7 +23,6 @@ import { useTheme } from "@mui/material";
 import {Drawer, Divider, List, ListItem, ListItemButton} from "@mui/material";
 import UserIcon from "../icon/UserIcon";
 import DonationIcon from "../icon/DonationIcon";
-import {color} from "../styles/theme";
 
 export const Bar = (props) => {
     const navigate = useNavigate();
@@ -114,7 +109,7 @@ export const Bar = (props) => {
                     }}>
                         <img
                             height="57"
-                            src={props.variant=="home"? "/img/Logo.svg" : "/img/LogoDark.svg"}
+                            src={props.variant=="home"? "/img/Logo.png" : "/img/LogoDark.png"}
                         />
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
