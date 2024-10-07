@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Routes, Route } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -5,32 +6,44 @@ import { Login } from './pages/Login';
 import { Receipts } from './pages/Receipts';
 import { BrowserRouter } from 'react-router-dom'
 import { PrivateOutlet } from "./utils/PrivateOutlet";
-import { Heatmap } from './pages/Heatmap';
-import { Box, CssBaseline } from '@mui/material';
+import { Charities } from "./pages/Charities";
+import { Donate } from "./pages/Donate";
+import { Donatees } from "./pages/Donatees";
+import { Box, CssBaseline, Container } from '@mui/material';
+import { Home } from "./pages/Home";
+import { AppTemplate } from "./pages/AppTemplate";
 import AppBar from "./pages/AppBar";
 
-import logo from './logo.svg';
+import { themeOptions } from "./styles/theme";
 import './App.css';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
+const darkTheme = createTheme(themeOptions);
 
 function App() {
+  React.useEffect(()=>{
+    document.title = "UnifyGiving"
+  },[]);
+  
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline/>
-      <Box sx={{ height: "100%"}}>
-      <BrowserRouter>
-      <AppBar />
+      <CssBaseline />
+      <Box id="" sx={{
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+      >
+        <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/heatmap" element={<Heatmap />} />
-            <Route path="*" element={<PrivateOutlet />}>
-              <Route index element={<Receipts />} />
-              <Route path="receipts" element={<Receipts />} />
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<AppTemplate />}>
+              <Route path="login" element={<Login />} />
+              <Route path="charities" element={<Charities />} />
+              <Route path="charity/:id" element={<Donatees />} />
+              <Route path="*" element={<PrivateOutlet />}>
+                <Route path="receipts" element={<Receipts />} />
+                <Route path="donate/:id" element={<Donate />} />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>
