@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Link, Divider } from "@mui/material";
+
 
 export default function Footer() {
     return (
@@ -7,6 +8,8 @@ export default function Footer() {
             sx={{
                 backgroundColor: "#0c0033",
                 width: 1,
+                padding: 4,
+                mt: 2,
             }}
         >
             <Box
@@ -14,9 +17,24 @@ export default function Footer() {
                     width: .95,
                     display: "flex",
                     flexDirection: "column",
+                    gap: 2,
                 }}
             >
-                <Typography variant="p" color="white">
+                <Box
+                    sx={{ display: "flex", flexDirection: "row", mb: 4}}>
+                    <img src="/img/Logo.png" />
+                </Box>
+                <Typography variant="body1" color="white">
+                    Contact us:
+                </Typography>
+                <Typography variant="body1" color="white">
+                    Email: <Link sx={{color:"white"}} to="mailto:contact@unifygiving.com">contact@unifygiving.com</Link>
+                </Typography>
+                <Typography variant="body1" color="white">
+                    Address: London, United Kingdom
+                </Typography>
+                <Divider sx={{borderColor: "white"}}/>
+                <Typography variant="body1" color="white">
                     © 2024 Unifygiving. All Rights Reserved.
                 </Typography>
             </Box>

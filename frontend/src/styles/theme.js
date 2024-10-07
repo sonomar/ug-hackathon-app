@@ -149,6 +149,8 @@ export const themeOptions = {
     },
     h6: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontSize: 20,
+      marginBottom: 10,
     },
     button: {
       fontFamily: '"Space Grotesk", "Roboto", "Helvetica", "Arial", sans-serif',

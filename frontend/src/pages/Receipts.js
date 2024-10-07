@@ -1,17 +1,20 @@
 import * as React from "react";
-import { useGetAllCountriesQuery, useGetAllReceiptsQuery } from "../api/receiptApi";
-import { Stack, Card, CardContent, CardHeader, Typography, rgbToHex, Avatar, Box, Grid2, Accordion, 
-    AccordionSummary, AccordionDetails, Switch, FormGroup, FormControlLabel, Chip, 
+import { useGetAllReceiptsGroupByDateQuery, useGetAllReceiptsQuery } from "../api/receiptApi";
+import {
+    Stack, Card, CardContent, CardHeader, Typography, rgbToHex, Avatar, Box, Grid2, Accordion,
+    AccordionSummary, AccordionDetails, Switch, FormGroup, FormControlLabel, Chip,
     CardActionArea, Button, Link,
-    CardActions} from "@mui/material";
+    CardActions, Skeleton
+} from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import CheckIcon from '@mui/icons-material/Check';
 import { Masonry } from "@mui/lab";
+import OneTimeDonationIcon from "../icon/OneTimeDonationIcon";
 import { red, blueGrey } from "@mui/material/colors";
 import { NavLink } from "react-router-dom";
 
 export const Receipts = () => {
-    const { data, error, isFetching } = useGetAllReceiptsQuery();
+    const { data, error, isFetching } = useGetAllReceiptsGroupByDateQuery();
 
     /*
     const {data: countriesData } = useGetAllCountriesQuery();
@@ -33,8 +36,12 @@ export const Receipts = () => {
     }
 */
     return (
-        <Box sx={{ flexGrow: 1 }} margin={1}>
-            {/*
+        <>
+            <Typography variant="h1" sx={{ textAlign: "left" }}>
+                My Donation
+            </Typography>
+            <Box sx={{ flexGrow: 1 }} margin={1}>
+                {/*
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMore />}
@@ -51,51 +58,78 @@ export const Receipts = () => {
                 </AccordionDetails>
             </Accordion>
             */}
-            <Grid2 container spacing={2} justifyContent="center">
-                {data?.map((r, index) => (
-                    <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-                        <Card
-                            variant="receipt"
-                            key={index}
-                            style={{
-                                backgroundColor: blueGrey[100 + (index % 4) * 100],
-                            }}
-                        >
-                            <CardHeader
-                                avatar={
-                                    <Avatar sx={(theme)=>{
-                                        return {backgroundColor: theme.palette.primary.main}
-                                    }}>
-                                        {r.recipient[0]}
-                                    </Avatar>
-                                }
-                                title={r.recipient}
-                                subheader={r.city + ", " + r.country}
-                                
-                            />
-                            <CardContent>
-                                <Typography gutterBottom>Date: {new Date(r.date).toLocaleDateString()} </Typography>
-                                <Typography gutterBottom>Amount: {r.currency} {r.amount} </Typography>
-                            </CardContent>
-                            <CardActionArea
-                                sx={{mb: 2}}
-                            >
-                                <CardActions>
-                                    <Link component={NavLink}
-                                        target="nft"
-                                        to={`https://solscan.io/token/${r.nft}`}
+                {isFetching &&
+                    <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
+                        <Skeleton
+                            variant="line" sx={{width:.3}}
+                        />
+                        <Skeleton
+                            variant="line" sx={{width:.5}}
+                        />
+                        <Skeleton
+                            variant="line" sx={{width:.4}}
+                        />
+                    </Box>
+                }
+                {data?.map((dateGroup, index) => (
+                    <>
+                        <Typography variant="h6">
+                            {new Date(dateGroup[0].date).toLocaleDateString()}
+                        </Typography>
+                        <Grid2 sx={{ my: 4 }} container spacing={2} justifyContent="flex-start">
+                            {dateGroup?.map((r, index) => (
+                                <Grid2 size={{ xs: 12, sm: 12, md: 6 }} key={index}>
+                                    <Card
+                                        key={index}
                                     >
-                                        View NFT
-                                    </Link>
-                                    <Link>
-                                        Download
-                                    </Link>
-                                </CardActions>
-                            </CardActionArea>
-                        </Card>
-                    </Grid2>
+                                        <CardContent sx={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "flex-start",
+                                            gap: 2,
+                                        }}>
+                                            <OneTimeDonationIcon />
+                                            <Box sx={{ flexGrow: 1 }}>
+                                                <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{r.recipient}</Typography>
+                                                <Typography>One time Donation</Typography>
+                                            </Box>
+                                            <Box>
+                                                <Typography>{r.currency} {r.amount}</Typography>
+                                                <Typography></Typography>
+                                            </Box>
+                                        </CardContent>
+                                        <CardActionArea
+                                            sx={{ mb: 2 }}
+                                        >
+                                            <CardActions sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                gap: 2,
+                                                alignSelf: "stretch",
+                                            }}>
+                                                <Button sx={{ width: .9 }}
+                                                    variant="outlined" component={NavLink}
+                                                    target="nft"
+                                                    to={`https://solscan.io/token/${r.nft}`}
+                                                >
+                                                    View NFT
+                                                </Button>
+                                                <Link component={NavLink}
+                                                    target="pdf"
+                                                    to={`https://ug-hackathon-app.onrender.com/pdf/${r.nft}`}
+                                                >
+                                                    Download Receipt
+                                                </Link>
+                                            </CardActions>
+                                        </CardActionArea>
+                                    </Card>
+                                </Grid2>
+                            ))}
+                        </Grid2>
+                    </>
                 ))}
-            </Grid2>
-        </Box>
+            </Box>
+        </>
     );
 }

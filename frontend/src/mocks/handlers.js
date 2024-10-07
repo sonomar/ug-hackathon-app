@@ -14,7 +14,7 @@ function getRandomInt(max) {
 function generateReceipts(count = 10) {
     return Array.apply(null, { length: count }).map((_, index) => {
         return {
-            date: faker.date.recent({ days: 180 }),
+            date: faker.date.recent({ days: 4 }),
             amount: getRandomInt(1000) + 10,
             recipient: faker.person.fullName(),
             city: faker.location.city(),
@@ -28,7 +28,7 @@ function generateReceipts(count = 10) {
 const receipts = generateReceipts(20);
 receipts.sort((a, b) => {
     if (a.date === b.date) return 0;
-    return a.date > b.date ? 1 : -1;
+    return a.date < b.date ? 1 : -1;
 });
 
 const delay = (delayInms) => {

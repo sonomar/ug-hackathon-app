@@ -7,9 +7,15 @@ const receitpApi = apiBase.injectEndpoints({
         }),
         getAllCountries: builder.query({
             query: () => "countries",
-        })
+        }),
+        getAllReceiptsGroupByDate: builder.query({
+            query: () => "receipts",
+            transformResponse: (response) => {
+                return Object.values(Object.groupBy(response, ({date}) => new Date(date).toLocaleDateString()));
+            }
+        }),
     }),
     overrideExisting: true
 });
 
-export const { useGetAllReceiptsQuery, useGetAllCountriesQuery } = receitpApi;
+export const { useGetAllReceiptsQuery, useGetAllCountriesQuery, useGetAllReceiptsGroupByDateQuery } = receitpApi;

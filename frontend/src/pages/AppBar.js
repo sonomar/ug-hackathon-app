@@ -20,14 +20,13 @@ import { useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "@mui/material";
-import {Drawer, Divider, List, ListItem, ListItemButton} from "@mui/material";
+import { Drawer, Divider, List, ListItem, ListItemButton } from "@mui/material";
 import UserIcon from "../icon/UserIcon";
-import DonationIcon from "../icon/DonationIcon";
+import { UserAppBarIcon, UserMobileMenuItems } from "./AppBarUserUI";
 
 export const Bar = (props) => {
     const navigate = useNavigate();
     const auth = useAuth();
-    const [anchorLogout, setAnchorLogout] = React.useState(null);
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -37,21 +36,9 @@ export const Bar = (props) => {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const handleLogoutMenu = (event) => {
-        setAnchorLogout(event.currentTarget);
-    }
 
-    const handleCloseLogoutMenu = () => {
-        setAnchorLogout(null);
-    }
+    //    const container = window !== undefined ? () => window().document.body : undefined;
 
-    const handleLogout = (event) => {
-        dispatch(clearCredentials());
-        setAnchorLogout(null);
-    }
-    
-//    const container = window !== undefined ? () => window().document.body : undefined;
-    
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ my: 2 }}>
@@ -60,24 +47,19 @@ export const Bar = (props) => {
             <Divider />
             <List>
                 <ListItemButton
-                    sx={{textAlign:"center"}}
-                    onClick={() => navigate("/receipts")}
+                    sx={{ textAlign: "center" }}
+                    onClick={() => navigate("/")}
                 >
-                    <ListItemText primary="Receipts"/>
+                    <ListItemText primary="Home" />
                 </ListItemButton>
                 <ListItemButton
-                    sx={{textAlign:"center"}}
+                    sx={{ textAlign: "center" }}
                     onClick={() => navigate("/charities")}
                 >
-                    <ListItemText primary="Charities"/>
+                    <ListItemText primary="Charities" />
                 </ListItemButton>
                 <Divider />
-                <ListItemButton
-                    sx={{textAlign:"center"}}
-                    onClick={() => navigate("/login")}
-                >
-                    <ListItemText primary="Login"/>
-                </ListItemButton>
+                <UserMobileMenuItems/>
             </List>
         </Box>
     );
@@ -93,7 +75,7 @@ export const Bar = (props) => {
                     borderRadius: theme.shape.borderRadius,
                     display: "flex",
                     flexGrow: 0,
-                    mt: {xs: 5, md: 3},
+                    mt: { xs: 5, md: 3 },
                     mb: 5,
                     borderColor: "#D5CDE0",
                     borderWidth: "1px",
@@ -109,7 +91,7 @@ export const Bar = (props) => {
                     }}>
                         <img
                             height="57"
-                            src={props.variant=="home"? "/img/Logo.png" : "/img/LogoDark.png"}
+                            src={props.variant == "home" ? "/img/Logo.png" : "/img/LogoDark.png"}
                         />
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -122,37 +104,6 @@ export const Bar = (props) => {
                             to="/charities"
                             variant="navbar">Charities</Button>
                     </Box>
-                    <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-                        <Button
-                            onClick={() => navigate("/receipts")}
-                            sx={{ mr: 2}}
-                            endIcon={<DonationIcon/>}
-                            >My Donation</Button>
-
-                        <Tooltip title={auth.cred.user?.username}>
-                            <IconButton sx={{ p: 0 }}
-                                size="48px"
-                                onClick={handleLogoutMenu}>
-                                <UserIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                            anchorEl={anchorLogout}
-                            open={Boolean(anchorLogout)}
-                            onClose={handleCloseLogoutMenu}
-                        >
-                            <MenuItem onClick={null} >
-                                <ListItemIcon>
-                                    <SettingsIcon />
-                                </ListItemIcon>
-                                Settings</MenuItem>
-                            <MenuItem onClick={handleLogout} >
-                                <ListItemIcon>
-                                    <LogoutIcon/>
-                                </ListItemIcon>
-                                Logout</MenuItem>
-                        </Menu>
-                    </Box>
                     <IconButton
                         sx={{
                             display: {
@@ -162,8 +113,9 @@ export const Bar = (props) => {
                         }}
                         onClick={handleDrawerToggle}
                     >
-                            <MenuIcon style={{fontSize: "48px"}}/>
+                        <MenuIcon style={{ fontSize: "48px" }} />
                     </IconButton>
+                    <UserAppBarIcon />
                 </Toolbar>
             </AppBar>
             <nav>
@@ -176,7 +128,7 @@ export const Bar = (props) => {
                         keepMounted: true,
                     }}
                     sx={{
-                        display: {sm: "block", md: "none"},
+                        display: { sm: "block", md: "none" },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: .5 },
                     }}
                 >
