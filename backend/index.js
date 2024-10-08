@@ -82,7 +82,7 @@ app.get("/api/receiptitems/:id", (req, res) => {
     });
 });
 
-    app.get("/charities", (req,res) => {                                                               // Return the Charity Table data
+    app.get("/api/charities", (req,res) => {                                                               // Return the Charity Table data
         db.query('SELECT * FROM charity', (err, result) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to fetch data from database' });
