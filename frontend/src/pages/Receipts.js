@@ -111,7 +111,7 @@ export const Receipts = () => {
                                                 <Button sx={{ width: .9 }}
                                                     variant="outlined" component={NavLink}
                                                     target="nft"
-                                                    to={`https://solscan.io/token/${r.nft}`}
+                                                    to={`https://solscan.io/token/${r.nft}?cluster=devnet#metadata`}
                                                 >
                                                     View NFT
                                                 </Button>
