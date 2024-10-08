@@ -91,7 +91,7 @@ app.get("/api/receiptitems/:id", (req, res) => {
         });
     });
 
-    app.get("/api/charities/:id", (req,res) => {               
+    app.get("/api/charity/:id", (req,res) => {               
         const id = req.params.id;                             
         db.query('SELECT * FROM charity where id = $1', [id], (err, result) => {
             if (err) {
