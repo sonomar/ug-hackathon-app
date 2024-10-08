@@ -81,8 +81,8 @@ app.get("/api/receiptitems/:id", (req, res) => {
         return res.status(200).json(result.rows);
     });
 });
-    // Charity Table
-app.get("/api/charity", (req,res) => {                                                               // Return the Charity Table data
+
+    app.get("/api/charities", (req,res) => {                                                               // Return the Charity Table data
         db.query('SELECT * FROM charity', (err, result) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to fetch data from database' });
@@ -91,7 +91,7 @@ app.get("/api/charity", (req,res) => {                                          
         });
     });
 
-    app.get("/api/charity/:id", (req,res) => {               
+    app.get("/api/charities/:id", (req,res) => {               
         const id = req.params.id;                             
         db.query('SELECT * FROM charity where id = $1', [id], (err, result) => {
             if (err) {
@@ -109,6 +109,7 @@ app.get("/api/charity", (req,res) => {                                          
     app.get("/api/donatee:id/imgB", (req,res) => {
         return res.status(200).json("imgB");
     });
+
     // Donatee Table
     app.get("/api/donors/:id", (req, res) => {                  // Gets Donor by id
         const charityid = req.params.id;
