@@ -111,16 +111,10 @@ export const Receipts = () => {
                                                 <Button sx={{ width: .9 }}
                                                     variant="outlined" component={NavLink}
                                                     target="nft"
-                                                    to={`https://solscan.io/token/${r.nft}?cluster=devnet#metadata`}
+                                                    to={`https://solscan.io/token/${r.signature}?cluster=devnet#metadata`}
                                                 >
                                                     View NFT
                                                 </Button>
-                                                <Link component={NavLink}
-                                                    target="pdf"
-                                                    to={`https://ug-hackathon-app.onrender.com/pdf/${r.nft}`}
-                                                >
-                                                    Download Receipt
-                                                </Link>
                                             </CardActions>
                                         </CardActionArea>
                                     </Card>

@@ -20,7 +20,7 @@ function generateReceipts(count = 10) {
             city: faker.location.city(),
             country: faker.location.country(),
             currency: faker.finance.currencySymbol(),
-            nft: "AGrdXTtjNYFazdHP31Jzmh4X3MwuWNakfjrCkHhfNTqP"
+            signature: "AGrdXTtjNYFazdHP31Jzmh4X3MwuWNakfjrCkHhfNTqP"
         }
     });
 }

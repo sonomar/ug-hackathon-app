@@ -48,7 +48,7 @@ export const Donatees = () => {
                         >
                             <CardMedia
                                 sx={{ height: 232 }}
-                                image={`/img/donatee/${r.id}.jpg`}
+                                image={`/img/donatee/${r.id}.png`}
                             />
                             <CardHeader
                                 titleTypographyProps={{ fontSize: "28px", fontWeight: 500 }}
