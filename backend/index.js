@@ -124,11 +124,12 @@ app.get("/api/donors/:id", (req, res) => {                  // Gets Donor by id
 });
 
 app.get("/nft/:id.json", (req, res)=>{
+    // id is receipt ID
     const id = req.params.id;
     
     // Replace with content in Database
-    donateeName = "DOGGO"; amount="100"; donorName="John"; donationDate=new Date(); 
-    res.status(200).json(nftMetadata(id, donateeName, amount, donorName, donationDate));
+    donateeName = "DOGGO"; amount="100"; donorName="John"; donationDate=new Date(); donateeId=1;
+    res.status(200).json(nftMetadata(donateeId, donateeName, amount, donorName, donationDate));
 });
 
 app.put("/api/donation", async (req, res) => {     // Hash receipt
@@ -150,6 +151,11 @@ app.put("/api/donation", async (req, res) => {     // Hash receipt
 
     // Change mint(1) to mint(receiptId)
     const signature = await mint(1);
+
+    // Store the signature in DB
+
+
+    // Return the full receipt
     return res.status(200).json({signature})
 });
 
