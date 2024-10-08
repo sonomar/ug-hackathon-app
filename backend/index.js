@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const { Client } = require('pg');
 const { mplTokenMetadata, fetchDigitalAsset, fetchAllDigitalAsset, verifyCollectionV1, fetchAllDigitalAssetByOwner, findMetadataPda, printSupply } = require('@metaplex-foundation/mpl-token-metadata');
 const { encode, decode } = require("uint8-base64");
-const { generateSigner, signerIdentity, percentAmount, publicKey, createSignerFromKeypair, createGenericFile, sol } = require('@metaplex-foundation/umi');
+const { generateSigner, signerIdentity, percentAmount, publicKey, createSignerFromKeypair, createGenericFile, sol, dateTime } = require('@metaplex-foundation/umi');
 const { createUmi } = require('@metaplex-foundation/umi-bundle-defaults');
 const { irysUploader } = require('@metaplex-foundation/umi-uploader-irys');
 const { base58 } = require('@metaplex-foundation/umi/serializers');
@@ -125,10 +125,12 @@ app.get("/api/donors/:id", (req, res) => {                  // Gets Donor by id
 
 app.get("/nft/:id.json", (req, res)=>{
     const id = req.params.id;
-    res.status(200).json(nftMetadata(id));
+    
+    // Replace with content in Database
+    donateeName = "DOGGO"; amount="100"; donorName="John"; donationDate=new Date(); 
+    res.status(200).json(nftMetadata(id, donateeName, amount, donorName, donationDate));
 });
 
-// Hashing
 app.put("/api/donation", async (req, res) => {     // Hash receipt
     const receipt = req.body;
     console.log(receipt);

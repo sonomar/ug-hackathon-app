@@ -29,7 +29,7 @@ async function mint(id){
     return mint.publicKey;
 }
 
-function nftMetadata(donateeId){
+function nftMetadata(donateeId, donateeName, amount, donorName, donationDate){
     const nftMeta = {
         name: "UnifyGiving Receipt",
         symbol: "UGR",
@@ -50,6 +50,12 @@ function nftMetadata(donateeId){
             ],
             categorty: "video",
         },
+        attributes: [
+            {trait_type: "recipient", value: donateeName},
+            {trait_type: "amount", value: amount},
+            {trait_type: "donatedBy", value: donatedBy},
+            {trait_type: "donationDate", value: donationDate},
+        ],
         animation_url: `https://ughackathonapp.onrender.com/nft/${donateeId}.mp4`,
     };
     return nftMeta;
