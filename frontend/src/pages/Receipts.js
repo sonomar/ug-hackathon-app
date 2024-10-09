@@ -94,7 +94,7 @@ export const Receipts = () => {
                                                 <Typography>One time Donation</Typography>
                                             </Box>
                                             <Box>
-                                                <Typography>{r.currency} {r.amount}</Typography>
+                                                <Typography>{r.currency?r.currency: "€"} {r.amount}</Typography>
                                                 <Typography></Typography>
                                             </Box>
                                         </CardContent>
