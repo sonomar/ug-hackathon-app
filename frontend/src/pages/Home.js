@@ -79,7 +79,7 @@ const homeHeader = (
                 mt: 2,
             }}
         >
-            <Button>Donate Now</Button>
+            <Button disabled>Donate (coming soon)</Button>
         </Box>
     </Box>
 );

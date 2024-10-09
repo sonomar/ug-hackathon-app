@@ -90,7 +90,7 @@ export const Receipts = () => {
                                         }}>
                                             <OneTimeDonationIcon />
                                             <Box sx={{ flexGrow: 1 }}>
-                                                <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{r.recipient}</Typography>
+                                                <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{r.donatee}</Typography>
                                                 <Typography>One time Donation</Typography>
                                             </Box>
                                             <Box>

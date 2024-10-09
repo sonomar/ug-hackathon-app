@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") return;
-  //if (process.env.REACT_APP_MOCK_DISABLED) return;
+  if (process.env.REACT_APP_MOCK_DISABLED) return;
   const { worker } = await import("./mocks/browser");
   return worker.start({
     onUnhandledRequest: "bypass",

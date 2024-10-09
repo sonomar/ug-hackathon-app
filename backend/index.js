@@ -10,7 +10,7 @@ const { irysUploader } = require('@metaplex-foundation/umi-uploader-irys');
 const { base58 } = require('@metaplex-foundation/umi/serializers');
 const { fs } = require('fs');
 const path = require('path');
-const {mint, nftMetadata} = require("./mint");
+const { mint, nftMetadata, generateSignature } = require("./mint");
 require('dotenv').config({ path: '.env' });
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -38,48 +38,38 @@ app.post("/api/login", (req, res) => {                      // User trys to logi
     });
     return res.status(200).json({ user: { username, wallet: "JFKLDSJFL", token: "dkslfjlkjdfsl" } });
 });
-// Receipts Table
-app.post("/api/receipts", (req, res) => {
-    db.query('INSERT INTO receipts(amount, datetime, username) VALUES($1, $2, $3)', [req.body.amount, req.body.datetime, req.body.username], (err, result) => {     // Posts a receipt
-        if (err) {
-            return res.status(500).json({ error: 'Failed to insert data into database' });
-        }
-        res.status(201).json({ message: 'Receipt created successfully' });
-    });
-});
+
 app.get("/api/receipts", (req, res) => {                        // Gets all Receipts returns whole table
-    db.query('SELECT * FROM receipts', (err, result) => {
+    db.query('SELECT receipts.*, donatees.name as donatee FROM receipts JOIN donatees ON donatee_id=donatees.id', (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Failed to fetch data from database' });
         }
         return res.status(200).json(result.rows);
     });
 });
+
 app.get("/api/receipts/:id", (req, res) => {                  // Gets Receipt by id
-    const recipientid = req.params.id;
-    db.query('SELECT * FROM receipts WHERE recipientid = $1', [recipientid], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to fetch data from database' });
-        }
-        return res.status(200).json(result.rows);
-    });
+    const id = req.params.id;
+    db.query("SELECT receipts.*, donatees.name as donatee FROM receipts JOIN donatees ON donatee_id=donatees.id WHERE receipts.id=$1", [id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ error: 'Failed to fetch data from database' });
+            }
+            if (result.rows.length < 1) {
+                return res.status(400).json({ error: `The Receipt with id: ${id} is not found. ` });
+            }
+            const receipt = result.rows[0];
+            return res.status(200).json(receipt);
+        });
 });
+
 app.get("/api/countries", (req, res) => {                                         // Gets a List of all countries that appear
     db.query('SELECT DISTINCT location FROM receipts', (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Failed to fetch data from database' });
         }
         return res.status(200).json(result.rows.map(row => row.location));
-    });
-});
-// Receipt Items Table
-app.get("/api/receiptitems/:id", (req, res) => {
-    const itemid = req.params.id;
-    db.query('SELECT * FROM receiptitems WHERE itemid = $1', [itemid], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to fetch data from database' });
-        }
-        return res.status(200).json(result.rows);
     });
 });
 
@@ -107,12 +97,12 @@ app.get("/api/charity/:id", (req, res) => {
     });
     */
     animals = [
-        { id: 1, name: "Vjosa", age: 3, sex: "Female", injections: true, neutered: true, personality: "Open-minded, relaxed, Likes to live alone without other cats. "},
-        { id: 2, name: "Esmer", age: 7, sex: "Female", injections: true, neutered: true, personality: "Sweet, social, cat-friendly, cuddly, knows what she wants. "},
-        { id: 3, name: "Emilia", age: 1, sex: "Female", injections: true, neutered: false, personality: "Playful and cuddly, loves human attention, likes to talk. "},
-        { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered: true, personality: "Loves cuddles, cat sociable and likes various kinds of food. "}
+        { id: 1, name: "Vjosa", age: 3, sex: "Female", injections: true, neutered: true, personality: "Open-minded, relaxed, Likes to live alone without other cats. " },
+        { id: 2, name: "Esmer", age: 7, sex: "Female", injections: true, neutered: true, personality: "Sweet, social, cat-friendly, cuddly, knows what she wants. " },
+        { id: 3, name: "Emilia", age: 1, sex: "Female", injections: true, neutered: false, personality: "Playful and cuddly, loves human attention, likes to talk. " },
+        { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered: true, personality: "Loves cuddles, cat sociable and likes various kinds of food. " }
     ];
-    sample_data = 
+    sample_data =
     {
         "name": "streunerhilfe-bulgarien",
         "country": "Germany",
@@ -145,40 +135,62 @@ app.get("/api/donors/:id", (req, res) => {                  // Gets Donor by id
     });
 });
 
-app.get("/nft/:id.json", (req, res)=>{
+app.get("/nft/:id.json", (req, res) => {
     // id is receipt ID
     const id = req.params.id;
-    
+    db.query("SELECT receipts.*, donatees.name as donatee FROM receipts JOIN donatees ON donatee_id=donatees.id WHERE receipts.id=$1", [id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ error: 'Failed to fetch data from database' });
+            }
+            if (result.rows.length < 1) {
+                return res.status(400).json({ error: `The Receipt with id: ${id} is not found. ` });
+            }
+            const receipt = result.rows[0];
+            const metadata = nftMetadata(receipt.donatee_id, receipt.donatee, receipt.amount, receipt.username, receipt.date);
+            return res.status(200).json(metadata);
+        });
+
     // Replace with content in Database
-    donateeName = "DOGGO"; amount="100"; donorName="John"; donationDate=new Date(); donateeId=1;
-    res.status(200).json(nftMetadata(donateeId, donateeName, amount, donorName, donationDate));
+    // donateeName = "DOGGO"; amount = "100"; donorName = "John"; donationDate = new Date(); donateeId = 1;
+    //res.status(200).json(nftMetadata(donateeId, donateeName, amount, donorName, donationDate));
 });
 
 app.put("/api/donate", async (req, res) => {     // Hash receipt
     const receipt = req.body;
     console.log(receipt);
-    const dataneeded = ["donorid", "amount", "datetime"];
+    const dataneeded = ["username", "amount", "donateeId"];
     const datamissing = dataneeded.filter(field => !receipt[field]);
+
     if (datamissing.length > 0) {
-        return res.status(400).json({ message: `Missing donation receipt data: ${datamissing.join(", ")}` });         // Tells you the what is missing for the put
+        return res.status(400).json({ error: `Missing donation receipt data: ${datamissing.join(", ")}` });         // Tells you the what is missing for the put
     }
-    const jsonEncrypt = {
-        donorid: receipt.donorid,
+
+    const mintSigner = generateSignature();
+    const receiptData = {
+        username: receipt.username,
         amount: receipt.amount,
-        datetime: receipt.datetime
+        date: JSON.stringify(new Date()),
+        donatee_id: receipt.donateeId,
+        signature: mintSigner.publicKey,
     }
+
 
     // TODO: ADD Database Logic to Store RECEIPT
-    
-
-    // Change mint(1) to mint(receiptId)
-    const signature = await mint(1);
-
-    // Store the signature in DB
-
-
-    // Return the full receipt
-    return res.status(200).json({signature})
+    await db.query("INSERT INTO receipts(amount, username, date, donatee_id, signature) VALUES ($1, $2, $3, $4, $5) RETURNING *; ",
+        [receiptData.amount, receiptData.username, receiptData.date, receiptData.donatee_id, receiptData.signature],
+        async (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(400).json({ error: "error when storing receipts" });
+            }
+            receiptId = result.rows[0].id;
+            // Change mint(1) to mint(receiptId)
+            const signature = await mint(receiptId, mintSigner);
+            return res.status(200).json(result.rows[0]);
+        }
+    );
 });
 
 

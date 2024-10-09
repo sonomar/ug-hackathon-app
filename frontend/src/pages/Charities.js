@@ -39,7 +39,7 @@ export const Charities = () => {
                         >
                             <CardMedia
                                 sx={{height: 305}}
-                                image="/img/charity/streun_banner.jpg"
+                                image={`/img/charity/${r.id}.png`}
                             />
                             <CardHeader
                                 titleTypographyProps={{fontSize: 16}}
