@@ -112,7 +112,7 @@ app.get("/api/charity/:id", (req, res) => {
         { id: 3, name: "Emilia", age: 1, sex: "Female", injections: true, neutered: false, personality: "Playful and cuddly, loves human attention, likes to talk. "},
         { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered: true, personality: "Loves cuddles, cat sociable and likes various kinds of food. "}
     ];
-    sample_data = [
+    sample_data = 
     {
         "name": "streunerhilfe-bulgarien",
         "country": "Germany",
@@ -122,8 +122,7 @@ app.get("/api/charity/:id", (req, res) => {
         "donatees": animals,
         "id": 1,
         "taxid": "a2DddfU943E3"
-    }
-    ];
+    };
     return res.status(200).json(sample_data);
 });
 
