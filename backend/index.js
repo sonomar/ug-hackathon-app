@@ -154,7 +154,7 @@ app.get("/nft/:id.json", (req, res)=>{
     res.status(200).json(nftMetadata(donateeId, donateeName, amount, donorName, donationDate));
 });
 
-app.put("/api/donation", async (req, res) => {     // Hash receipt
+app.put("/api/donate", async (req, res) => {     // Hash receipt
     const receipt = req.body;
     console.log(receipt);
     const dataneeded = ["donorid", "amount", "datetime"];
