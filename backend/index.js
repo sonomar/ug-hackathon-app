@@ -106,7 +106,7 @@ app.get("/api/charity/:id", (req, res) => {
             return res.status(500).json({ error: 'Failed to fetch data from database' });
         }
         if (result.rows.length>1){
-            return res.status(200).json({...result.rows[0], donatees: sample});
+            return res.status(200).json([{...result.rows[0], donatees: sample}]);
         }
         return res.status(200).json(result.rows);
     });
