@@ -4,6 +4,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from '../hooks/useAuth'
 import { useDonateMutation } from "../api/donateApi";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+import { NavLink } from "react-router-dom";
+
 import * as yup from "yup";
 import {
     TextField, Box,
@@ -14,14 +18,22 @@ import {
 const schema = yup.object({
     donateeId: yup.string().required(),
     amount: yup.number().required().min(10),
-    datetime: yup.date().default(new Date()),
     username: yup.string().required(),
 }).required();
 
 export const Donate = () => {
     const auth = useAuth();
     const { id: donateeId } = useParams();
-    const [donate, {isLoading}] = useDonateMutation();
+    const [donate, { data, isLoading, isSuccess, isError, reset }] = useDonateMutation();
+    const [open, setOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        if (isSuccess) setOpen(true);
+    }, [isSuccess, isError])
+
+    const handleClose = (event, reason) => {
+        setOpen(false);
+    };
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -56,11 +68,26 @@ export const Donate = () => {
                             />
                         </CardContent>
                         <CardActions>
-                            <Button type="submit">Make Donation!</Button>
+                            <LoadingButton
+                                loading={isLoading}
+                                type="submit">Make Donation!</LoadingButton>
                         </CardActions>
                     </Card>
                 </form>
             </Box>
+            <Dialog
+                open={open}
+                onClose={handleClose}>
+                <DialogTitle>Donation Made</DialogTitle>
+                <DialogContentText sx={{padding: 2}}>
+                    <Link component={NavLink} to={`https://explorer.solana.com/address/${data?.signature}?cluster=devnet`} target="nft">
+                        Click to view your NFT Receipt here.
+                    </Link>
+                </DialogContentText>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cool!</Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 }

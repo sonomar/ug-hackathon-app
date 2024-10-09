@@ -92,10 +92,11 @@ export const handlers = [
     }),
     http.put("/api/donate", async ({ request }) => {
         const requestBody = await request.json();
-
+        await delay(1000);
         return HttpResponse.json({
             mint: "AGrdXTtjNYFazdHP31Jzmh4X3MwuWNakfjrCkHhfNTqP",
             hash: "FJKLDSJFLKDSJFLDKSJFS",
+            signature: "AGrdXTtjNYFazdHP31Jzmh4X3MwuWNakfjrCkHhfNTqP",
             ...requestBody
         })
     }),

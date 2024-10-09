@@ -125,13 +125,17 @@ app.get("/api/donatee:id/imgB", (req, res) => {
 });
 
 // Donatee Table
-app.get("/api/donors/:id", (req, res) => {                  // Gets Donor by id
-    const charityid = req.params.id;
-    db.query('SELECT * FROM donatees WHERE charityid = $1', [charityid], (err, result) => {
+app.get("/api/donatees/:id", (req, res) => {                  // Gets Donor by id
+    const id = req.params.id;
+    db.query('SELECT * FROM donatees WHERE id=$1', [id], (err, result) => {
         if (err) {
+            console.log(err);
             return res.status(500).json({ error: 'Failed to fetch data from database' });
         }
-        return res.status(200).json(result.rows);
+        if (result.rows.length<1){
+            return res.status(400).json({error: `Donatee with ${id} is not found. `});
+        }
+        return res.status(200).json(result.rows[0]);
     });
 });
 
