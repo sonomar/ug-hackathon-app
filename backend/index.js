@@ -107,9 +107,6 @@ app.get("/api/charity/:id", (req, res) => {
         }
         result.rows[0].donatees = JSON.parse(result.rows[0].donatees);
         console.log(result.rows);
-        if (result.rows.length>1){
-            return res.status(200).json();
-        }
         return res.status(200).json(result.rows);
     });
 });
