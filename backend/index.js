@@ -98,7 +98,7 @@ app.get("/api/charity/:id", (req, res) => {
         { id: 1, name: "Vjosa", age: 3, sex: "Female", injections: true, neutered: true, personality: "Open-minded, relaxed, Likes to live alone without other cats. "},
         { id: 2, name: "Esmer", age: 7, sex: "Female", injections: true, neutered: true, personality: "Sweet, social, cat-friendly, cuddly, knows what she wants. "},
         { id: 3, name: "Emilia", age: 1, sex: "Female", injections: true, neutered: false, personality: "Playful and cuddly, loves human attention, likes to talk. "},
-        { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered, true, personality: "Loves cuddles, cat sociable and likes various kinds of food. "}
+        { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered: true, personality: "Loves cuddles, cat sociable and likes various kinds of food. "}
     ];
     db.query('SELECT * FROM charity where id = $1', [id], (err, result) => {
         if (err) {
