@@ -74,8 +74,8 @@ export const Donatees = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-                                <Button sx={{ width: 0.8 }}
-                                    variant="outlined" href={`/donate/${r.id}`}>Donate Now</Button>
+                                <Button sx={{ width: 0.8 }} disabled
+                                    variant="outlined" href={`/donate/${r.id}`}>Donate(coming soon)</Button>
                             </CardActions>
                         </Card>
                     </Grid2>
