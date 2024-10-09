@@ -93,13 +93,9 @@ app.get("/api/charities", (req, res) => {                                       
 });
 
 app.get("/api/charity/:id", (req, res) => {
+    /*
     const id = req.params.id;
-    sample = [
-        { id: 1, name: "Vjosa", age: 3, sex: "Female", injections: true, neutered: true, personality: "Open-minded, relaxed, Likes to live alone without other cats. "},
-        { id: 2, name: "Esmer", age: 7, sex: "Female", injections: true, neutered: true, personality: "Sweet, social, cat-friendly, cuddly, knows what she wants. "},
-        { id: 3, name: "Emilia", age: 1, sex: "Female", injections: true, neutered: false, personality: "Playful and cuddly, loves human attention, likes to talk. "},
-        { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered: true, personality: "Loves cuddles, cat sociable and likes various kinds of food. "}
-    ];
+    
     db.query('SELECT * FROM charity where id = $1', [id], (err, result) => {
         if (err) {
             console.error(err);
@@ -109,6 +105,26 @@ app.get("/api/charity/:id", (req, res) => {
         console.log(result.rows);
         return res.status(200).json(result.rows);
     });
+    */
+    animals = [
+        { id: 1, name: "Vjosa", age: 3, sex: "Female", injections: true, neutered: true, personality: "Open-minded, relaxed, Likes to live alone without other cats. "},
+        { id: 2, name: "Esmer", age: 7, sex: "Female", injections: true, neutered: true, personality: "Sweet, social, cat-friendly, cuddly, knows what she wants. "},
+        { id: 3, name: "Emilia", age: 1, sex: "Female", injections: true, neutered: false, personality: "Playful and cuddly, loves human attention, likes to talk. "},
+        { id: 4, name: "Batman", age: 2, sex: "Male", injections: true, neutered: true, personality: "Loves cuddles, cat sociable and likes various kinds of food. "}
+    ];
+    sample_data = [
+    {
+        "name": "streunerhilfe-bulgarien",
+        "country": "Germany",
+        "city": "Berlin",
+        "slogan": "Support to Help Aiding Stray Animals",
+        "detail": "Provides vital support for stray animals in Bulgaria, offering rescue, medical care, and shelter for abandoned dogs and cats.",
+        "donatees": animals,
+        "id": 1,
+        "taxid": "a2DddfU943E3"
+    }
+    ];
+    return res.status(200).json(sample_data);
 });
 
 app.get("/api/donatee:id/imgA", (req, res) => {
