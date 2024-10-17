@@ -11,6 +11,7 @@ const { base58 } = require('@metaplex-foundation/umi/serializers');
 const { fs } = require('fs');
 const path = require('path');
 const { mint, nftMetadata, generateSignature } = require("./mint");
+const { getCountryFees } = require("./mercuryo");
 require('dotenv').config({ path: '.env' });
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -62,6 +63,12 @@ app.get("/api/receipts/:id", (req, res) => {                  // Gets Receipt by
             const receipt = result.rows[0];
             return res.status(200).json(receipt);
         });
+});
+
+app.get("/api/countryFees", async (req, res) => {                        // Gets all CountryFees from Mercuryo
+        const countryFees = await getCountryFees(process.env.WIDGET_ID);
+        return res.status(200).json(countryFees);
+    });
 });
 
 app.get("/api/countries", (req, res) => {                                         // Gets a List of all countries that appear
