@@ -68,7 +68,6 @@ app.get("/api/receipts/:id", (req, res) => {                  // Gets Receipt by
 app.get("/api/countryFees", async (req, res) => {                        // Gets all CountryFees from Mercuryo
         const countryFees = await getCountryFees(process.env.WIDGET_ID);
         return res.status(200).json(countryFees);
-    });
 });
 
 app.get("/api/countries", (req, res) => {                                         // Gets a List of all countries that appear
